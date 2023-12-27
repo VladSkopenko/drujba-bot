@@ -1,5 +1,0 @@
-rich
-art
-prompt_toolkit
-colorama
-cryptography

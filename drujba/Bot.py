@@ -28,7 +28,7 @@ class BotForUser(ABC):
         pass
 
 
-class MyCmd(cmd.Cmd):
+class MyCmd(cmd.Cmd, BotForUser):
     create_base_json_files()
     book = AddressBook(CONTACTS)
     notes_book = NotesBook(NOTES)

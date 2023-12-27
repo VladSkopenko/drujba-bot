@@ -10,7 +10,22 @@ from art import *
 from prompt_toolkit import prompt
 from prompt_toolkit import PromptSession
 from prompt_toolkit.completion import WordCompleter
-from drujba.FolderPath import create_base_json_files , CONTACTS,NOTES
+from drujba.FolderPath import create_base_json_files, CONTACTS, NOTES
+from abc import ABC, abstractmethod
+
+
+class BotForUser(ABC):
+    @abstractmethod
+    def do_help(self):
+        pass
+
+    @abstractmethod
+    def do_show_notes(self, *args):
+        pass
+
+    @abstractmethod
+    def do_show_rec(self, *args):
+        pass
 
 
 class MyCmd(cmd.Cmd):
@@ -216,7 +231,8 @@ class MyCmd(cmd.Cmd):
                     if isinstance(sh.tag, list):
                         table.add_row(
                             f"{sh.note_id.get_id}", f"{sh.addition_date.get_date}",
-                            f"{' '.join([str(item) for item in sh.tag])}", f"{sh.title.get_title}", f"{sh.note.get_note}")
+                            f"{' '.join([str(item) for item in sh.tag])}", f"{sh.title.get_title}",
+                            f"{sh.note.get_note}")
                 self.console.print(table)
             else:
                 print(error_message("No notes found."))
@@ -236,7 +252,8 @@ class MyCmd(cmd.Cmd):
                     if isinstance(sh.tag, list):
                         table.add_row(
                             f"{sh.note_id.get_id}", f"{sh.addition_date.get_date}",
-                            f"{' '.join([str(item) for item in sh.tag])}", f"{sh.title.get_title}", f"{sh.note.get_note}")
+                            f"{' '.join([str(item) for item in sh.tag])}", f"{sh.title.get_title}",
+                            f"{sh.note.get_note}")
 
                 self.console.print(table)
             else:
@@ -386,9 +403,9 @@ class MyCmd(cmd.Cmd):
                 "Enter the new phone number>>> "))
             if edit_old_ph and edit_new_ph:
                 if exit_record is not None:
-                    
+
                     exiting_record_str = exit_record
-                    
+
                     try:
                         if self.book.edit_phone(record_to_edit, exiting_record_str, edit_old_ph, edit_new_ph):
                             print(positive_action("Phone edit successful"))
@@ -397,7 +414,7 @@ class MyCmd(cmd.Cmd):
                     except Exception as ve:
                         print(error_message("No changes made to the phone number."))
                 else:
-                    
+
                     try:
                         exiting_record_str = self.book.find_exiting_record(
                             record_to_edit.name.get_name)
@@ -412,11 +429,11 @@ class MyCmd(cmd.Cmd):
                 print(error_message("No changes made to the phone number."))
 
     # заміна номера телефона (працює разом з <<<def edit_phone>>>)
-    def do_edit_ph_rec(self,*args):
+    def do_edit_ph_rec(self, *args):
         "Edites phone to record in addressbook by name"
-        
+
         question_name = input(command_message(
-            "Enter the name to edit phone>>> ")) 
+            "Enter the name to edit phone>>> "))
         if question_name != "":
             record_to_edit = self.book.find_record(question_name)
             if isinstance(record_to_edit, Record):
@@ -452,8 +469,8 @@ class MyCmd(cmd.Cmd):
                 input_id = input(command_message(
                     "Enter ID>>> "))
                 if input_id != "":
-                    
-                    self.edit_phone(self.book.find_record_id(int(input_id)),self.book.find_exititng_record_id(int(input_id)))
+                    self.edit_phone(self.book.find_record_id(int(input_id)),
+                                    self.book.find_exititng_record_id(int(input_id)))
             else:
                 print(error_message(
                     f"No record found with the name: {question_name}"))
@@ -535,7 +552,6 @@ class MyCmd(cmd.Cmd):
                 input_id = input(command_message(
                     "Enter ID>>> "))
                 if input_id != "":
-
                     self.edit_tag(self.book.find_record_id(
                         int(input_id)), self.book.find_exititng_record_id(int(input_id)))
             else:
@@ -622,7 +638,7 @@ class MyCmd(cmd.Cmd):
 
     # працює разом з <<<def add_comp>>>
     def do_company_rec(self, *args):
-        "Adds a company to a record in the address book by name"
+        """Adds a company to a record in the address book by name"""
         question_name = input(command_message(
             "Enter the name of the record to edit>>> "))
         if question_name != "":
@@ -811,7 +827,7 @@ class MyCmd(cmd.Cmd):
                             print(positive_action("Tag edded successful"))
                         else:
                             print(error_message("Tag not found"))
-                    except Exception as ve:
+                    except Exception:
                         print(error_message("No changes made to tag"))
                 else:
 
@@ -868,7 +884,6 @@ class MyCmd(cmd.Cmd):
                 input_id = input(command_message(
                     "Enter ID>>> "))
                 if input_id != "":
-
                     self.add_tag(self.book.find_record_id(
                         int(input_id)), self.book.find_exititng_record_id(int(input_id)))
             else:
@@ -1203,7 +1218,7 @@ class MyCmd(cmd.Cmd):
                         record_to_edit.name.get_name)
                     print(self.book.add_phone(
                         record_to_edit, exiting_record_str, in_data))
-                except Exception as ve:
+                except Exception:
                     print(error_message("No changes made to the phone"))
             else:
                 print(error_message("No added the phone"))
@@ -1273,7 +1288,7 @@ class MyCmd(cmd.Cmd):
                 print(error_message("No added the phone"))
 
     # працює разом з <<<def rem_ph>>>
-    def do_remove_phone_rec(self, *args):
+    def do_remove_phone_rec(self):
         "Remove phone from a record in the address book by name"
         question_name = input(command_message(
             "Enter the name of the record to edit>>> "))
@@ -1337,8 +1352,8 @@ class MyCmd(cmd.Cmd):
                 print(error_message("No added the phone"))
 
     # працює разом з <<<def rem_ph>>>
-    def do_edit_name_rec(self, *args):
-        "Edites name to record in addressbook by name (use search before use)"
+    def do_edit_name_rec(self):
+        """Edites name to record in addressbook by name (use search before use)"""
         question_name = input(command_message(
             "Enter the name of the record to edit>>> "))
         if question_name != "":

@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: bot-drujba
+Version: 1.0.0
+Summary: Bot assistant
+Home-page: https://github.com/artemLink/drujba
+Author: Drujba team
+Requires-Dist: rich
+Requires-Dist: art
+Requires-Dist: prompt_toolkit
+Requires-Dist: colorama
+Requires-Dist: cryptography

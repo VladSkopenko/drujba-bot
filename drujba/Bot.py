@@ -27,6 +27,10 @@ class BotForUser(ABC):
     def do_show_rec(self, *args):
         pass
 
+    @abstractmethod
+    def do_exit(self):
+        pass
+
 
 class MyCmd(cmd.Cmd, BotForUser):
     create_base_json_files()

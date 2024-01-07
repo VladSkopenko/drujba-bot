@@ -1,8 +1,8 @@
-from drujba.Address_book import AddressBook
-from drujba.Record import Record
-from drujba.Style import command_message, error_message, positive_action
-from drujba.Notes_book import NotesBook
-from drujba.sort_files import sort_by_type
+from Address_book import AddressBook
+from Record import Record
+from Style import command_message, error_message, positive_action
+from Notes_book import NotesBook
+from sort_files import sort_by_type
 import cmd
 from rich.console import Console
 from rich.table import Table
@@ -10,7 +10,7 @@ from art import *
 from prompt_toolkit import prompt
 from prompt_toolkit import PromptSession
 from prompt_toolkit.completion import WordCompleter
-from drujba.FolderPath import create_base_json_files, CONTACTS, NOTES
+from FolderPath import create_base_json_files, CONTACTS, NOTES
 from abc import ABC, abstractmethod
 
 

@@ -1,4 +1,4 @@
-from drujba.Style import error_message
+from Style import error_message
 
 
 def input_error(func):

@@ -8,12 +8,12 @@ from prompt_toolkit import PromptSession
 from prompt_toolkit.completion import WordCompleter
 from random import choice
 from string import ascii_letters
-from drujba.FolderPath import FOLDER_ACCOUNTS_PATH, FOLDER_NOTESBOOKS_PATH, FOLDER_ADDRESSBOOKS_PATH, create_folders, create_base_json_files
+from FolderPath import FOLDER_ACCOUNTS_PATH, FOLDER_NOTESBOOKS_PATH, FOLDER_ADDRESSBOOKS_PATH, create_folders, create_base_json_files
 import os
-from drujba.Style import positive_action, command_message
-from drujba.Bot import MyCmd
-from drujba.Notes_book import NotesBook
-from drujba.Address_book import AddressBook
+from Style import positive_action, command_message
+from Bot import MyCmd
+from Notes_book import NotesBook
+from Address_book import AddressBook
 import imaplib
 
 import time
@@ -129,7 +129,7 @@ class UserAccount():
 
     def login(self):
         """
-        Функція login файл account.py
+        Функція login файл app.py
         Відповідає за процесс входу в обліковий запис
         Parameters:
         Немає параметрів.
@@ -256,8 +256,7 @@ class LoginCMD(cmd.Cmd):
 def start():
     console = Console()
     table = Table(show_header=True, header_style="bold cyan")
-    table.add_column("Welcome To Help Assistant", style="bright_magenta", width=100, vertical='middle',
-                     justify='center')
+    table.add_column("Welcome To Help Assistant", style="bright_magenta", width=100, justify='center')
     create_folders()
     create_base_json_files()
     table.add_row("login    ---> Log in to the application")

@@ -1,8 +1,8 @@
 from collections import UserList
-from drujba.Notes import NotesRecord, Tag
+from Notes import NotesRecord, Tag
 import json
 import re
-from drujba.decorators import input_error
+from decorators import input_error
 
 
 class NotesBook(UserList):

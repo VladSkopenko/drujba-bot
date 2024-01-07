@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 import json
 import datetime
-from drujba.Style import book_style, positive_action
-from drujba.decorators import input_error
+from Style import book_style, positive_action
+from decorators import input_error
 import re
 import calendar
 

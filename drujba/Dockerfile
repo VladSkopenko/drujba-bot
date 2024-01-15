@@ -1,9 +1,16 @@
 FROM python:3.11
 
+# Устанавливаем Poetry
+RUN pip install poetry
+
+# Создаем рабочий каталог
 WORKDIR /app
 
-COPY . .
+# Копируем все файлы из текущего каталога в контейнер
+COPY . /app/
 
-RUN pip install -r requirements.txt
+# Устанавливаем зависимости с помощью Poetry
+RUN pip intall -r ruquirements.txt
 
+# Команда для запуска приложения
 CMD ["python", "app.py"]

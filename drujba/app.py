@@ -4,6 +4,8 @@ import os
 import time
 from random import choice
 from string import ascii_letters
+from gtts import gTTS
+import datetime
 
 from cryptography.fernet import Fernet
 from prompt_toolkit import PromptSession
@@ -281,7 +283,13 @@ class LoginCMD(cmd.Cmd):
         return True
 
 
+x = "Вітаю вас пане,  мене звати Дружба та я ваш персональний помічник.Чим можу допомогти?"
+audio = gTTS(text=x, lang="uk", slow=False)
+audio.save("test.mp3")
+
+
 def start():
+    os.system("start test.mp3")
     console = Console()
     table = Table(show_header=True, header_style="bold cyan")
     table.add_column(
@@ -297,6 +305,8 @@ def start():
     console.print(table, width=100, style="bold magenta")
     logcmd = LoginCMD()
     logcmd.cmdloop()
+    time.sleep(10)
+    os.remove("test.mp3")
 
 
 if __name__ == "__main__":

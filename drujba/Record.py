@@ -23,7 +23,7 @@ class Tag(Field):
 
     @get_tag.setter
     def set_tag(self, tag: str):
-            self._tag = tag
+        self._tag = tag
 
     def __eq__(self, other):
         return isinstance(other, Tag) and self._tag == other._tag
@@ -105,14 +105,13 @@ class ID(Field):
     # SETTER
     @get_id.setter
     def set_id(self, value):
-
         if type(value) is int:
             self._id = value
         else:
-            print('Incrorrect ID')
+            print("Incrorrect ID")
 
     def __str__(self):
-        return f'{self.get_id}'
+        return f"{self.get_id}"
 
 
 class Name(Field):
@@ -126,7 +125,6 @@ class Name(Field):
 
     @get_name.setter
     def set_name(self, value: str):
-
         name = value.split()
 
         chars_count = 0
@@ -135,18 +133,20 @@ class Name(Field):
                 chars_count += len(letter)
             else:
                 raise ValueError(
-                    'ValueError: The name should consist only of letters and spaces. Minimum length is 3 characters, '
-                    'maximum is 20. Please try again.')
+                    "ValueError: The name should consist only of letters and spaces. Minimum length is 3 characters, "
+                    "maximum is 20. Please try again."
+                )
         chars_count += len(name)
         if chars_count >= 3 and chars_count <= 20:
             self._name = value
         else:
             raise ValueError(
-                'ValueError: The name should consist only of letters and spaces. Minimum length is 3 characters, '
-                'maximum is 20. Please try again.')
+                "ValueError: The name should consist only of letters and spaces. Minimum length is 3 characters, "
+                "maximum is 20. Please try again."
+            )
 
     def __str__(self):
-        return f'{self.get_name}'
+        return f"{self.get_name}"
 
 
 class Phone(Field):
@@ -165,10 +165,12 @@ class Phone(Field):
         elif bool(phone) is False:
             self._phone = None
         else:
-            raise ValueError('ValueError: Phone Number must have 10 numbers ex: 0501952343')
+            raise ValueError(
+                "ValueError: Phone Number must have 10 numbers ex: 0501952343"
+            )
 
     def __str__(self):
-        return f'{self.get_phone}'
+        return f"{self.get_phone}"
 
 
 class Birthday(Field):
@@ -182,40 +184,46 @@ class Birthday(Field):
 
     @get_birthday.setter
     def set_birthday(self, birthday):
-
-        if isinstance(birthday, str) and birthday != '':
-            birthday_date = birthday.split('-')
+        if isinstance(birthday, str) and birthday != "":
+            birthday_date = birthday.split("-")
             if len(birthday_date) != 3:
                 raise ValueError(
-                    "Invalid birthday date. Please enter the date in 'YYYY-MM-DD' format.")
+                    "Invalid birthday date. Please enter the date in 'YYYY-MM-DD' format."
+                )
             year = birthday_date[0]
             mounth = birthday_date[1]
             day = birthday_date[2]
             if not year.isdigit() or len(year) != 4:
-                raise ValueError('The year consists only of numbers and has 4 characters.')
+                raise ValueError(
+                    "The year consists only of numbers and has 4 characters."
+                )
             if not mounth.isdigit() or len(mounth) > 2:
-                raise ValueError('The month consists only of numbers and contains 2 symbols.')
+                raise ValueError(
+                    "The month consists only of numbers and contains 2 symbols."
+                )
             if int(mounth) > 12:
-                raise ValueError('The month can have values ​​from 1 to 12.')
+                raise ValueError("The month can have values ​​from 1 to 12.")
             if not day.isdigit():
-                raise ValueError('The day consists only of numbers.')
+                raise ValueError("The day consists only of numbers.")
             days_in_mounth = calendar.monthrange(int(year), int(mounth))[1]
             if int(day) > days_in_mounth:
-                raise ValueError(f'Wrong day, the month has only {days_in_mounth} days.')
+                raise ValueError(
+                    f"Wrong day, the month has only {days_in_mounth} days."
+                )
             self._birthday = datetime.date(int(year), int(mounth), int(day))
 
         elif birthday == None:
             self._birthday = None
 
     def __str__(self):
-        return f'{str(self._birthday)}'
+        return f"{str(self._birthday)}"
 
 
 class Email(Field):
     def __init__(self, email) -> None:
         self._email = None
         self.set_email = email
-        
+
     def find_all_emails(self, email):
         result = re.findall(r"[a-zA-Z][\w_.]+@\w{2,}\.\w{2,}", email)
         return result
@@ -230,16 +238,25 @@ class Email(Field):
             if self.find_all_emails(email):
                 self._email = email
             else:
-                raise ValueError('Wrong email format.')
+                raise ValueError("Wrong email format.")
         else:
             self._email = None
 
     def __str__(self):
-        return f'{self.get_email}'
+        return f"{self.get_email}"
 
 
 class Record:
-    def __init__(self, name, id, birthday=None, email=None, comment=None, address=None, company=None):
+    def __init__(
+        self,
+        name,
+        id,
+        birthday=None,
+        email=None,
+        comment=None,
+        address=None,
+        company=None,
+    ):
         self.name = Name(name)
         self.id = ID(int(id))
         self.phones = []
@@ -251,13 +268,14 @@ class Record:
         self.tags = []
 
     def __str__(self):
-        return (f'{positive_action("ID:")} {book_style(self.id.get_id)} '
-                f'{positive_action("Name:")} {book_style(self.name.get_name)} '
-                f'{positive_action("Phones:")} {book_style(" ".join([str(item) for item in self.phones]))} '
-                f'{positive_action("Birthday:")} {book_style(self.birthday.get_birthday)} '
-                f'{positive_action("Email:")} {book_style(self.email.get_email)} '
-                f'{positive_action("Comment:")} {book_style(self.comment.get_comment)} '
-                f'{positive_action("Address:")} {book_style(self.address.get_address)} '
-                f'{positive_action("Company:")} {book_style(self.company.get_company)} '
-                f'{positive_action("Tags:")} {book_style(" ".join([str(i) for i in self.tags]))} ')
-
+        return (
+            f'{positive_action("ID:")} {book_style(self.id.get_id)} '
+            f'{positive_action("Name:")} {book_style(self.name.get_name)} '
+            f'{positive_action("Phones:")} {book_style(" ".join([str(item) for item in self.phones]))} '
+            f'{positive_action("Birthday:")} {book_style(self.birthday.get_birthday)} '
+            f'{positive_action("Email:")} {book_style(self.email.get_email)} '
+            f'{positive_action("Comment:")} {book_style(self.comment.get_comment)} '
+            f'{positive_action("Address:")} {book_style(self.address.get_address)} '
+            f'{positive_action("Company:")} {book_style(self.company.get_company)} '
+            f'{positive_action("Tags:")} {book_style(" ".join([str(i) for i in self.tags]))} '
+        )

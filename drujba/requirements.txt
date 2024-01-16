@@ -3,3 +3,4 @@ colorama
 cryptography
 prompt-toolkit
 rich
+gtts
